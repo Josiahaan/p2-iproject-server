@@ -4,11 +4,13 @@ const routerUser = require("./user")
 const routerCartItem = require("./cartitem")
 const routerProduct = require("./product")
 const routerShop = require('./shop')
+const routerPulsa = require('./pulsa')
 
 router.use(routerUser)
-router.use(routerCartItem)
-router.use(routerProduct)
-router.use(routerShop)
+router.use("/cartitem", routerCartItem)
+router.use("/product", routerProduct)
+router.use("/shop", routerShop)
+router.use("/pulsa",routerPulsa)
 
 
 module.exports = router

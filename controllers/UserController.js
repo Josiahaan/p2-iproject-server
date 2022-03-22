@@ -4,6 +4,7 @@ const { createToken } = require("../helpers/jwt");
 
 class UserController {
   static async login(req, res, next) {
+    // console.log(req);
     try {
       const { email, password } = req.body;
       let user = await User.findOne({ where: { email } });
