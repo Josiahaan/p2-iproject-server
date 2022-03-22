@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Product.belongsToMany(models.User, { through: models.CartItem})
+      Product.belongsTo(models.Shop)
     }
   }
   Product.init({
@@ -75,6 +76,18 @@ module.exports = (sequelize, DataTypes) => {
           msg: "Stock is required"
         },
         min: 1
+      }
+    },
+    ShopId:{
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notNull:{
+          msg: "Shop Id is required"
+        },
+        notEmpty: {
+          msg: "Shop Id is required"
+        }
       }
     },
   }, {
