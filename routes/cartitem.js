@@ -5,5 +5,6 @@ const isUser = require('../middlewares/authentication')
 
 routerCartItem.get('/', isUser, CartItemController.getCart)
 routerCartItem.post('/', isUser, CartItemController.addToCart)
+routerCartItem.delete('/:id', isUser, CartItemController.deleteCart)
 
 module.exports = routerCartItem

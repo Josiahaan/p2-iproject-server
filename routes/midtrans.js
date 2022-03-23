@@ -15,8 +15,9 @@ routerMidtrans.post('/payment', async (req, res) => {
     serverKey : 'SB-Mid-server-1ma6JiKFEciB7nR0KoP5GMH7',
     clientKey : 'SB-Mid-client-s6SV0WfrkztKRJyG'
   });
-  console.log(snap);
+  // console.log(snap);
   try {
+    console.log("masuk try", req.body);
     const { name, email, price, itemName } = req.body
     // console.log(req.body)
     let parameter = {
@@ -40,6 +41,7 @@ routerMidtrans.post('/payment', async (req, res) => {
     const result  = await snap.createTransaction(parameter)
     res.status(200).json(result)
   } catch (err) {
+    console.log("masuk catch");
     console.log(err)
   }
 })

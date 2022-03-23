@@ -1,6 +1,7 @@
 const { User } = require("../models");
 const bcrypt = require("bcryptjs");
 const { createToken } = require("../helpers/jwt");
+const { use } = require("../routes");
 
 class UserController {
   static async login(req, res, next) {
@@ -20,11 +21,13 @@ class UserController {
           res.status(401).json({ message: "Invalid email/password" });
         } else {
           const payload = {
+            id: user.id,
+            fullname: user.fullname,
             email: user.email,
-            password: user.password,
+            // password: user.password,
           };
           const access_token = createToken(payload);
-          res.status(200).json({ access_token });
+          res.status(200).json({ access_token, payload});
         }
       }
     } catch (err) {
