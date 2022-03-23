@@ -24,18 +24,6 @@ module.exports = {
         onDelete: "cascade",
         onUpdate: "cascade",
       },
-      ProductId: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
-        references: {
-          model: {
-            tableName: "Products",
-          },
-          key: "id",
-        },
-        onDelete: "cascade",
-        onUpdate: "cascade",
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

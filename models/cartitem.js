@@ -12,13 +12,20 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       CartItem.belongsTo(models.User)
-      CartItem.belongsTo(models.Product)
     }
   }
   CartItem.init({
     quantity: DataTypes.INTEGER,
     UserId: DataTypes.INTEGER,
-    ProductId: DataTypes.INTEGER
+    cart: {
+      type: DataTypes.TEXT,
+      get() {
+        return JSON.parse(this.getDataValue("cart"))
+      },
+      set(value) {
+        return this.setDataValue("cart", JSON.stringify(value))
+      }
+    }
   }, {
     sequelize,
     modelName: 'CartItem',

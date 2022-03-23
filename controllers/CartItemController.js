@@ -3,26 +3,21 @@ const { CartItem , User, Product } = require('../models')
 class CartItemController {
   static async addToCart(req, res, next) {
     try {
-      const { id: productId } = req.params;
-      const { id: userId } = req.user;
-
-      const [cartitem, created] = await CartItem.findOrCreate({
-        where: {
-          productId,
-          userId
-        }
+      const {quantity, cart} = req.body
+      const { id: UserId } = req.user;
+      // console.log(req.body);
+      // console.log(UserId, "<<<<<<<<<");
+      const response = await CartItem.create({
+        quantity: +quantity,
+        cart,
+        UserId
       })
+      // console.log(response, "sadasdasdsad");
       // console.log(created);
       // console.log(bookmark.dataValues);
-      if (!created) {
-        throw { name: 'AlreadyOnCart' }
-      }
-      res.status(201).json({
-        id: cartitem.dataValues.id,
-        productId: cartitem.dataValues.ProductId,
-        userId: cartitem.dataValues.UserId,
-      });
+      res.status(201).json({response});
     } catch (err) {
+      // console.log(err);
       next(err);
     }
   }
@@ -41,18 +36,10 @@ class CartItemController {
         },
         include: [
           {
-            model: Product,
-            through: {
-              attributes: []
-            },
+            model: CartItem,
             attributes: {
               exclude: ["createdAt", "updatedAt"],
-            },
-            exclude: [
-              {
-                model: CartItem
-              },
-            ],
+            }
           },
         ],
       });

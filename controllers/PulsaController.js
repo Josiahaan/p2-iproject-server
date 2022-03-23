@@ -18,8 +18,8 @@ class PulsaController {
     };
     
     axios.request(options).then(function (response) {
-      console.log(response.data);
-      res.status(200).json(response.data)
+      // console.log(response.data);
+      res.status(200).json(response.data.data.pricelist)
     }).catch(function (err) {
       console.error(err);
     });

@@ -1,8 +1,9 @@
 const express = require("express")
 const routerCartItem = express.Router()
 const CartItemController = require("../controllers/CartItemController")
+const isUser = require('../middlewares/authentication')
 
-routerCartItem.get('/cartitems', CartItemController.getCart)
-routerCartItem.post('/products:id', CartItemController.addToCart)
+routerCartItem.get('/', isUser, CartItemController.getCart)
+routerCartItem.post('/', isUser, CartItemController.addToCart)
 
 module.exports = routerCartItem
