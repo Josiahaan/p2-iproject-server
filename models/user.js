@@ -51,8 +51,26 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       },
-      address: DataTypes.STRING,
-      phoneNumber: DataTypes.STRING,
+      address: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: { msg: "Address is required" },
+          notEmpty: {
+            msg: "Adress is required",
+          },
+        },
+      },
+      phoneNumber: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: { msg: "phone number is required" },
+          notEmpty: {
+            msg: "phone number is required",
+          },
+        },
+      },
     },
     {
       hooks: {

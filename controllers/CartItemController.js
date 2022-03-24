@@ -18,8 +18,7 @@ class CartItemController {
         UserId
       })
       // console.log(response, "sadasdasdsad");
-      // console.log(created);
-      // console.log(bookmark.dataValues);
+      // console.log(response);
       res.status(201).json({response});
     } catch (err) {
       // console.log(err);
@@ -61,31 +60,38 @@ class CartItemController {
     // console.log(req.body);
     const {name, email, price, itemName} = req.body
     try {
-     await CartItem.destroy({where:{id}})
-      res.status(200).json({message: "success cart deleted"})
+      if(!req.body) {
+        await CartItem.destroy({where:{id}})
+        res.status(200).json({message: "success cancel product"})
+      } else {
+        await CartItem.destroy({where:{id}})
+         res.status(200).json({message: "success cart deleted"})
+   
+         const transporter = nodemailer.createTransport({
+           service: "hotmail",
+           auth:{
+             user: SERVERID,
+             pass: SERVERPASSWORD,
+           }
+         })
+         
+         const options = {
+           from: "hacktivstore@outlook.com",
+           to: `${email}`,
+           subject: `Terima kasih ${name} atas transaksi anda`,
+           text: `kamu telah berhasil membeli ${itemName} seharga ${price}. terima kasih untuk pembelian`
+         }
+         
+         transporter.sendMail(options, function(err, info) {
+           if(err){
+             console.log(err);
+             return;
+           }
+           console.log("sent: "+ info.response);
+         })
 
-      const transporter = nodemailer.createTransport({
-        service: "hotmail",
-        auth:{
-          user: SERVERID,
-          pass: SERVERPASSWORD,
-        }
-      })
-      
-      const options = {
-        from: "indiproject123@outlook.com",
-        to: `${email}`,
-        subject: `Terima kasih ${name} atas transaksi anda`,
-        text: `kamu telah berhasil membeli ${itemName} seharga ${price}. terima kasih untuk pembelian`
       }
-      
-      transporter.sendMail(options, function(err, info) {
-        if(err){
-          console.log(err);
-          return;
-        }
-        console.log("sent: "+ info.response);
-      })
+
 
     } catch (err) {
       console.log(err);
